@@ -1,8 +1,3 @@
-// mini_compiler.cpp
-// Single-file mini-compiler: interactive input prompt + lexer, parser, semantic checks,
-// TAC generation and pseudo-assembly. Paste into Code::Blocks as mini_compiler.cpp.
-// Build with C++17 enabled (-std=gnu++17).
-
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -671,8 +666,6 @@ int main(int argc, char** argv){
             return 0;
         }
     }
-
-    // Capture output into a string stream so we can print it under "The Output is"
     ostringstream capture;
     streambuf *old_buf = cout.rdbuf(capture.rdbuf());
 
@@ -724,3 +717,4 @@ int main(int argc, char** argv){
 
     return 0;
 }
+
