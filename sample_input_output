@@ -1,0 +1,265 @@
+---------------
+Input Sample 1
+---------------
+int a;
+int main() {
+  a = 10;
+  print(a);
+  return 0;
+}
+
+---------------
+Output Sample 1
+---------------
+The Output is
+-- Tokens --
+1:1 KW_INT 'int'
+1:5 IDENT 'a'
+1:6 SEMI ';'
+2:1 KW_INT 'int'
+2:5 IDENT 'main'
+2:9 LPAREN '('
+2:10 RPAREN ')'
+2:12 LBRACE '{'
+3:3 IDENT 'a'
+3:5 ASSIGN '='
+3:7 INT_LITERAL '10'
+3:9 SEMI ';'
+4:3 KW_PRINT 'print'
+4:8 LPAREN '('
+4:9 IDENT 'a'
+4:10 RPAREN ')'
+4:11 SEMI ';'
+5:3 KW_RETURN 'return'
+5:10 INT_LITERAL '0'
+5:11 SEMI ';'
+6:1 RBRACE '}'
+7:1 END ''
+
+-- Global Declarations --
+  Decl: a
+
+-- Functions Parsed --
+Function main()
+  Block
+    Assign(a)
+      Int(10)
+    Print
+      Var(a)
+    Return
+      Int(0)
+-- Global Symbol Table --
+a : int
+
+-- Three Address Code --
+a = 0
+main:
+t1 = 10
+a = t1
+PRINT a
+t2 = 0
+RET = t2
+GOTO ENDFUNC
+
+-- Pseudo Assembly --
+    MOV a, 0
+main:
+    MOV t1, 10
+    MOV a, t1
+    PRINT a
+    MOV t2, 0
+    MOV RET, t2
+    JMP ENDFUNC
+
+
+---------------
+Input Sample 2
+---------------
+int x, y;
+
+int main() {
+  x = 5;
+  y = x * 2 + 3;
+  if (y > 10) {
+    print(y);
+  } else {
+    while (x < 4) {
+      x = x + 1;
+    }
+    print(x);
+  }
+  return 0;
+}
+
+---------------
+Output Sample 2
+---------------
+The Output is
+-- Tokens --
+1:1 KW_INT 'int'
+1:5 IDENT 'x'
+1:6 COMMA ','
+1:8 IDENT 'y'
+1:9 SEMI ';'
+3:1 KW_INT 'int'
+3:5 IDENT 'main'
+3:9 LPAREN '('
+3:10 RPAREN ')'
+3:12 LBRACE '{'
+4:3 IDENT 'x'
+4:5 ASSIGN '='
+4:7 INT_LITERAL '5'
+4:8 SEMI ';'
+5:3 IDENT 'y'
+5:5 ASSIGN '='
+5:7 IDENT 'x'
+5:9 MUL '*'
+5:11 INT_LITERAL '2'
+5:13 PLUS '+'
+5:15 INT_LITERAL '3'
+5:16 SEMI ';'
+6:3 KW_IF 'if'
+6:6 LPAREN '('
+6:7 IDENT 'y'
+6:9 GT '>'
+6:11 INT_LITERAL '10'
+6:13 RPAREN ')'
+6:15 LBRACE '{'
+7:5 KW_PRINT 'print'
+7:10 LPAREN '('
+7:11 IDENT 'y'
+7:12 RPAREN ')'
+7:13 SEMI ';'
+8:3 RBRACE '}'
+8:5 KW_ELSE 'else'
+8:10 LBRACE '{'
+9:5 KW_WHILE 'while'
+9:11 LPAREN '('
+9:12 IDENT 'x'
+9:14 LT '<'
+9:16 INT_LITERAL '4'
+9:17 RPAREN ')'
+9:19 LBRACE '{'
+10:7 IDENT 'x'
+10:9 ASSIGN '='
+10:11 IDENT 'x'
+10:13 PLUS '+'
+10:15 INT_LITERAL '1'
+10:16 SEMI ';'
+11:5 RBRACE '}'
+12:5 KW_PRINT 'print'
+12:10 LPAREN '('
+12:11 IDENT 'x'
+12:12 RPAREN ')'
+12:13 SEMI ';'
+13:3 RBRACE '}'
+14:3 KW_RETURN 'return'
+14:10 INT_LITERAL '0'
+14:11 SEMI ';'
+15:1 RBRACE '}'
+16:1 END ''
+
+-- Global Declarations --
+  Decl: x y
+
+-- Functions Parsed --
+Function main()
+  Block
+    Assign(x)
+      Int(5)
+    Assign(y)
+      Binary(+)
+        Binary(*)
+          Var(x)
+          Int(2)
+        Int(3)
+    If
+      Binary(>)
+        Var(y)
+        Int(10)
+      Block
+        Print
+          Var(y)
+      Block
+        While
+          Binary(<)
+            Var(x)
+            Int(4)
+          Block
+            Assign(x)
+              Binary(+)
+                Var(x)
+                Int(1)
+        Print
+          Var(x)
+    Return
+      Int(0)
+-- Global Symbol Table --
+y : int
+x : int
+
+-- Three Address Code --
+x = 0
+y = 0
+main:
+t1 = 5
+x = t1
+t2 = 2
+t3 = x * t2
+t4 = 3
+t5 = t3 + t4
+y = t5
+t6 = 10
+t7 = y > t6
+IFZ t7 GOTO L1
+PRINT y
+GOTO L2
+L1:
+L3:
+t8 = 4
+t9 = x < t8
+IFZ t9 GOTO L4
+t10 = 1
+t11 = x + t10
+x = t11
+GOTO L3
+L4:
+PRINT x
+L2:
+t12 = 0
+RET = t12
+GOTO ENDFUNC
+
+-- Pseudo Assembly --
+    MOV x, 0
+    MOV y, 0
+main:
+    MOV t1, 5
+    MOV x, t1
+    MOV t2, 2
+    MUL t3, x, t2
+    MOV t4, 3
+    ADD t5, t3, t4
+    MOV y, t5
+    MOV t6, 10
+    > t7, y, t6
+    CMP t7, 0
+    JE L1
+    PRINT y
+    JMP L2
+L1:
+L3:
+    MOV t8, 4
+    < t9, x, t8
+    CMP t9, 0
+    JE L4
+    MOV t10, 1
+    ADD t11, x, t10
+    MOV x, t11
+    JMP L3
+L4:
+    PRINT x
+L2:
+    MOV t12, 0
+    MOV RET, t12
+    JMP ENDFUNC
